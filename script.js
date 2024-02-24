@@ -33,7 +33,7 @@ const TaskComplete = () => {
     for (let i = 0; i < check.length; i++) {
         if (check[i].checked == true) {
             list[i].style.textDecoration = "line-through";
-            // saveData();
+            saveData();
         }
         else {
             list[i].style.textDecoration = "none";
