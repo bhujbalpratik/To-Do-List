@@ -8,7 +8,7 @@ const AddTaskD = () => {
         document.getElementById('ListContainer').innerHTML += " <li class=\"List\"> <input type=\"checkbox\" onclick=\"TaskComplete();\" class=\"check\"/>" + tsk + "<span onclick=\"remove(this)\" class=\"rmv\">&times;</span></li>";
     }
     document.getElementById('Taskdes').value = "";
-    // saveData();
+     saveData();
 }
 
 const AddTaskM = () => {
@@ -21,7 +21,7 @@ const AddTaskM = () => {
         document.getElementById('ListContainerMobile').innerHTML += " <li class=\"List\"> <input type=\"checkbox\" onclick=\"TaskComplete();\" class=\"check\"/>" + tsk + "<span onclick=\"remove(this)\" class=\"rmv\">&times;</span></li>";
     }
     document.getElementById('Taskdesc').value = "";
-    // saveData();
+    saveData();
 
 }
 
@@ -37,7 +37,7 @@ const TaskComplete = () => {
         }
         else {
             list[i].style.textDecoration = "none";
-            // saveData();
+            saveData();
         }
     }
 
@@ -53,7 +53,7 @@ const remove = (x) => {
     for (let i = 0; i < rmv.length; i++) {
         if (rmv[i].style.backgroundColor == "white") {
             list[i].style.display = "none";
-            // saveData();
+            saveData();
         }
     }
 
@@ -72,3 +72,29 @@ const remove = (x) => {
 //     // }
 // }
 // showTask();
+const saveData = () => {
+    // Save task list HTML
+    localStorage.setItem("taskListMobile", ListContainerMobile.innerHTML);
+    localStorage.setItem("taskList", ListContainer.innerHTML);
+    
+    // Save checked status of checkboxes
+    const checkboxes = document.querySelectorAll('.check');
+    checkboxes.forEach((checkbox, index) => {
+        localStorage.setItem(`checkbox_${index}`, checkbox.checked);
+    });
+}
+
+const showTask = () => {
+    // Display task list HTML
+    ListContainerMobile.innerHTML = localStorage.getItem("taskListMobile");
+    ListContainer.innerHTML = localStorage.getItem("taskList");
+
+    // Restore checked status of checkboxes
+    const checkboxes = document.querySelectorAll('.check');
+    checkboxes.forEach((checkbox, index) => {
+        const checked = localStorage.getItem(`checkbox_${index}`) === 'true';
+        checkbox.checked = checked;
+    });
+}
+
+showTask();
